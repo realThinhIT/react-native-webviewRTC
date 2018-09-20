@@ -16,7 +16,7 @@ this is customization library of [react-native-webview-android](https://github.c
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
+1. Open up `android/app/src/main/java/[...]/MainApplication.java`
   - Add `import com.reactlibrary.RNWebviewPackage;` to the imports at the top of the file
   - Add `new RNWebviewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
@@ -35,18 +35,9 @@ this is customization library of [react-native-webview-android](https://github.c
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 <uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
-<uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
-<uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
 <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.WAKE_LOCK" />
-
-<uses-feature android:name="android.hardware.camera"/>
-<uses-feature android:name="android.hardware.camera.autofocus"/>
-<uses-feature android:name="android.hardware.audio.low_latency" />
-<uses-feature android:name="android.hardware.audio.pro" />
-<uses-feature android:name="android.hardware.microphone" />
 ```
 
 ## Usage
