@@ -42,7 +42,7 @@ this is customization library of [react-native-webview-android](https://github.c
 
 ## Usage
 ```javascript
-import WebViewAndroid from 'react-native-webview-rtc';
+const WebViewAndroid = require('react-native-webview-rtc');
 
 var SITE_URL = 'https://react-native-webrtc.herokuapp.com';
 var URL_DOMAIN = 'react-native-webrtc.herokuapp.com';
