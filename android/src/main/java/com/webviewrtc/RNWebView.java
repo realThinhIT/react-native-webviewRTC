@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.webviewrtc;
 
 import android.annotation.SuppressLint;
 
@@ -18,6 +18,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.PermissionRequest;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebResourceError;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.SystemClock;
@@ -46,6 +49,7 @@ class RNWebView extends WebView implements LifecycleEventListener {
     private String siteURL = "";
 
     protected class EventWebClient extends WebViewClient {
+        private boolean isError = false;
 
         public boolean shouldOverrideUrlLoading(WebView view, String url){
             int navigationType = 0;
@@ -61,8 +65,9 @@ class RNWebView extends WebView implements LifecycleEventListener {
         }
 
         public void onPageFinished(WebView view, String url) {
-            mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), false, url, view.canGoBack(), view.canGoForward()));
-
+            if (this.isError == false) {
+              mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), false, url, view.canGoBack(), view.canGoForward(), 200, "Success load page"));
+            }
             currentUrl = url;
 
             if(RNWebView.this.getInjectedJavaScript() != null) {
@@ -80,7 +85,34 @@ class RNWebView extends WebView implements LifecycleEventListener {
             siteURL = url;
             Log.d("onPageStarted", "siteURL is :" + siteURL);
 
-            mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), true, url, view.canGoBack(), view.canGoForward()));
+            mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), true, url, view.canGoBack(), view.canGoForward(), 0, "No page loaded"));
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            int statusCode = errorResponse.getStatusCode();
+            String responseMessage = errorResponse.getReasonPhrase();
+            String url = request.getUrl().toString();
+
+            this.isError = true;
+            mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), false, url, false, false, statusCode, responseMessage));
+        }
+
+        @TargetApi(Build.VERSION_CODES.M)
+        @Override
+        public void onReceivedError (WebView view, WebResourceRequest request, WebResourceError error) {
+          String url = request.getUrl().toString();
+          int statusCode = error.getErrorCode();
+          String errorDescription = error.getDescription().toString();
+
+          this.isError = true;
+          mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), false, url, false, false, statusCode, errorDescription));
+        }
+
+        @Override
+        public void onReceivedError (WebView view, int errorCode, String description, String failingUrl) {
+          this.isError = true;
+          mEventDispatcher.dispatchEvent(new NavigationStateChangeEvent(getId(), SystemClock.nanoTime(), view.getTitle(), false, failingUrl, false, false, errorCode, description));
         }
     }
 

@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.webviewrtc;
 
 import javax.annotation.Nullable;
 
@@ -7,7 +7,6 @@ import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-// import android.support.annotation.RequiresApi;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebSettings;
 import android.webkit.CookieManager;
@@ -109,7 +108,6 @@ public class RNWebViewManager extends SimpleViewManager<RNWebView> {
 
     // Added by Lucas - to enable ring tone using audio.play()
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    // @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @ReactProp(name = "mediaPlayUserGesture", defaultBoolean = false)
     public void setMediaPlayUserGesture(RNWebView view, boolean mediaPlayUserGesture) {
         view.getSettings().setMediaPlaybackRequiresUserGesture(mediaPlayUserGesture);

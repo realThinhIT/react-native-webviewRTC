@@ -17,7 +17,7 @@ this is customization library of [react-native-webview-android](https://github.c
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
-  - Add `import com.reactlibrary.RNWebviewPackage;` to the imports at the top of the file
+  - Add `import com.webviewrtc.RNWebviewPackage;` to the imports at the top of the file
   - Add `new RNWebviewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
@@ -35,7 +35,6 @@ this is customization library of [react-native-webview-android](https://github.c
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 <uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.RECORD_VIDEO"/>
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
@@ -166,4 +165,3 @@ const styles = StyleSheet.create({
 ```
 
 or see `App.js` file in the library
-  

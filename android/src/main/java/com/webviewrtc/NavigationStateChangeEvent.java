@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.webviewrtc;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -14,8 +14,10 @@ public class NavigationStateChangeEvent extends Event<NavigationStateChangeEvent
     private final String mUrl;
     private final boolean mCanGoBack;
     private final boolean mCanGoForward;
+    private final int mStatusCode;
+    private final String mResponseMessage;
 
-    public NavigationStateChangeEvent(int viewId, long timestampMs, String title, boolean isLoading, String url, boolean canGoBack, boolean canGoForward) {
+    public NavigationStateChangeEvent(int viewId, long timestampMs, String title, boolean isLoading, String url, boolean canGoBack, boolean canGoForward, int statusCode, String responseMessage) {
         super(viewId);
 
         mTitle = title;
@@ -23,6 +25,8 @@ public class NavigationStateChangeEvent extends Event<NavigationStateChangeEvent
         mUrl = url;
         mCanGoBack = canGoBack;
         mCanGoForward = canGoForward;
+        mStatusCode = statusCode;
+        mResponseMessage = responseMessage;
     }
 
     @Override
@@ -42,6 +46,8 @@ public class NavigationStateChangeEvent extends Event<NavigationStateChangeEvent
         eventData.putString("url", mUrl);
         eventData.putBoolean("canGoBack", mCanGoBack);
         eventData.putBoolean("canGoForward", mCanGoForward);
+        eventData.putInt("statusCode", mStatusCode);
+        eventData.putString("responseMessage", mResponseMessage);
 
         return eventData;
     }

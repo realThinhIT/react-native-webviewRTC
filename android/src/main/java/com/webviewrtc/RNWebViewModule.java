@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.webviewrtc;
 
 import android.annotation.SuppressLint;
 import com.facebook.react.common.annotations.VisibleForTesting;
